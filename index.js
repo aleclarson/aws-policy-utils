@@ -111,22 +111,6 @@ function normalizeBase64(str) {
 }
 
 /**
- * Normalize all invalid AWS signature characters.
- *
- * For more information on AWS signatures, see
- * http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-creating-signed-url-canned-policy.html
- *
- * @deprecated
-
- */
-function normalizeSignature(sig) {
-  console.log(
-    'Deprecation Warning: "normalizeSignature" will soon be removed. Please ' +
-    'use "normalizeBase64"');
-  return normalizeBase64(sig);
-}
-
-/**
  * Create an AWS policy.
  *
  * @private
@@ -187,7 +171,6 @@ function _getIpRange(opts) {
 exports.getSignedCookies = getSignedCookies;
 exports.getSignedUrl = getSignedUrl;
 exports.getSignedRTMPUrl = getSignedRTMPUrl;
-exports.normalizeSignature = normalizeSignature;
 exports.normalizeBase64 = normalizeBase64;
 exports._getExpireTime = _getExpireTime;
 exports._getIpRange = _getIpRange;
