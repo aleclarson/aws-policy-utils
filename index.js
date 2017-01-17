@@ -6,7 +6,6 @@ var url = require('url');
 var crypto = require('crypto');
 var fs = require('fs');
 var util = require('util');
-var _ = require('lodash');
 var CannedPolicy = require('./CannedPolicy');
 
 /**
@@ -29,7 +28,7 @@ function getSignedUrl(cfUrl, params) {
   // is called.
   var parsedUrl = url.parse(cfUrl, true);
   parsedUrl.search = '';
-  _.extend(parsedUrl.query, {
+  Object.assign(parsedUrl.query, {
     'Expires': policy.expireTime,
     'Policy': normalizeBase64(policyStr),
     'Signature': normalizeBase64(signature),
@@ -182,27 +181,7 @@ function _getIpRange(opts) {
   return opts.ipRange || null;
 }
 
-/**
- * Helper function for retrieving the private key from the params object.
- * @private
- */
-function _getPrivateKey(params) {
-  var privateKeyString = params.privateKeyString;
-  var pem;
 
-  if (params.privateKeyPath) {
-    pem = fs.readFileSync(params.privateKeyPath);
-    privateKeyString = pem.toString('ascii');
-  }
-
-  var newLinePattern = /\r|\n/;
-  var lineBreakExists = newLinePattern.test(privateKeyString);
-  if (!lineBreakExists) {
-      throw new Error('Invalid private key string, must include line breaks');
-  }
-
-  return privateKeyString;
-}
 
 
 exports.getSignedCookies = getSignedCookies;
