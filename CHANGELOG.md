@@ -11,6 +11,10 @@
 [caub]: https://github.com/caub
 [joelwass]: https://github.com/joelwass
 
+## 2.2.1 (2017-01-17)
+- Remove `lodash` dependency
+- Move `lib` files into the root directory
+
 ## 2.2.0 (2016-11-09)
 * development: [@caub][caub]: Simplified expiry and normalization logic
 * development: [@joelwass][joelwass]: Added additional error handling for private key string
