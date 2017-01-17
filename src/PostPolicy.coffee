@@ -10,9 +10,9 @@ AccessControl = OneOf "private public-read public-read-write"
 type = Type "PostPolicy"
 
 type.defineOptions
-  acl: AccessControl.isRequired
   expires: Number.or(Date).isRequired
   bucket: String.isRequired
+  acl: AccessControl.isRequired
   conditions: Array
   key: String
   contentType: String
@@ -27,10 +27,10 @@ type.defineValues (options) ->
 type.defineMethods
 
   _parseConditions: (options) ->
-    {conditions, bucket, acl, contentType, contentLength} = options
-    conditions ?= []
+    {bucket, acl, contentLength} = options
+    conditions = options.conditions or []
     conditions.push ["starts-with", "$key", options.key or ""]
-    conditions.push ["starts-with", "$Content-Type", contentType or ""]
+    conditions.push ["starts-with", "$Content-Type", options.contentType or ""]
     conditions.push ["starts-with", "$Content-Length", ""]
     if isType contentLength, Array
       conditions.push ["content-length-range", contentLength[0], contentLength[1]]
