@@ -14,6 +14,7 @@ type.defineOptions
   expires: Number.or(Date).isRequired
   bucket: String.isRequired
   conditions: Array
+  key: String
   contentType: String
   contentLength: Number.or Array
 
@@ -28,7 +29,7 @@ type.defineMethods
   _parseConditions: (options) ->
     {conditions, bucket, acl, contentType, contentLength} = options
     conditions ?= []
-    conditions.push ["starts-with", "$key", ""]
+    conditions.push ["starts-with", "$key", options.key or ""]
     conditions.push ["starts-with", "$Content-Type", contentType or ""]
     conditions.push ["starts-with", "$Content-Length", ""]
     if isType contentLength, Array
